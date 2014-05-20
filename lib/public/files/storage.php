@@ -35,6 +35,7 @@ namespace OCP\Files;
  * All paths passed to the storage are relative to the storage and should NOT have a leading slash.
  */
 interface Storage {
+
 	/**
 	 * $parameters is a free form array with the configuration options needed to construct the storage
 	 *
@@ -327,4 +328,5 @@ interface Storage {
 	 * @return bool true if the files are stored locally, false otherwise
 	 */
 	public function isLocal();
+
 }
