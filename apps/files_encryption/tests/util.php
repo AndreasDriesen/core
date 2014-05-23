@@ -121,7 +121,7 @@ class Test_Encryption_Util extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @medium
-	 * @brief test that paths set during User construction are correct
+	 * test that paths set during User construction are correct
 	 */
 	function testKeyPaths() {
 		$util = new Encryption\Util($this->view, $this->userId);
@@ -136,7 +136,7 @@ class Test_Encryption_Util extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @medium
-	 * @brief test detection of encrypted files
+	 * test detection of encrypted files
 	 */
 	function testIsEncryptedPath() {
 
@@ -171,7 +171,7 @@ class Test_Encryption_Util extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @medium
-	 * @brief test setup of encryption directories
+	 * test setup of encryption directories
 	 */
 	function testSetupServerSide() {
 		$this->assertEquals(true, $this->util->setupServerSide($this->pass));
@@ -179,14 +179,14 @@ class Test_Encryption_Util extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @medium
-	 * @brief test checking whether account is ready for encryption,
+	 * test checking whether account is ready for encryption,
 	 */
 	function testUserIsReady() {
 		$this->assertEquals(true, $this->util->ready());
 	}
 
 	/**
-	 * @brief test checking whether account is not ready for encryption,
+	 * test checking whether account is not ready for encryption,
 	 */
 //	function testUserIsNotReady() {
 //		$this->view->unlink($this->publicKeyDir);
@@ -200,7 +200,7 @@ class Test_Encryption_Util extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @medium
-	 * @brief test checking whether account is not ready for encryption,
+	 * test checking whether account is not ready for encryption,
 	 */
 	function testIsLegacyUser() {
 		\Test_Encryption_Util::loginHelper(\Test_Encryption_Util::TEST_ENCRYPTION_UTIL_LEGACY_USER);
@@ -279,7 +279,7 @@ class Test_Encryption_Util extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-<	 * @brief Test that data that is read by the crypto stream wrapper
+<	 * Test that data that is read by the crypto stream wrapper
 	 */
 	function testGetFileSize() {
 		\Test_Encryption_Util::loginHelper(\Test_Encryption_Util::TEST_ENCRYPTION_UTIL_USER1);
@@ -554,7 +554,7 @@ class Test_Encryption_Util extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @param $user
+	 * @param string $user
 	 * @param bool $create
 	 * @param bool $password
 	 */
@@ -595,7 +595,7 @@ class Test_Encryption_Util extends \PHPUnit_Framework_TestCase {
 	 * to be able to test the migration path
 	 *
 	 * @param integer $status needed migration status for test
-	 * @param $user for which user the status should be set
+	 * @param string $user for which user the status should be set
 	 * @return boolean
 	 */
 	private function setMigrationStatus($status, $user) {

@@ -49,7 +49,7 @@ class LDAP implements ILDAPWrapper {
 	/**
 	 * @param LDAP $link
 	 * @param LDAP $result
-	 * @param $cookie
+	 * @param string $cookie
 	 * @return bool|LDAP
 	 */
 	public function controlPagedResultResponse($link, $result, &$cookie) {
@@ -65,7 +65,7 @@ class LDAP implements ILDAPWrapper {
 	 * @param LDAP $link
 	 * @param int $pageSize
 	 * @param bool $isCritical
-	 * @param array $cookie
+	 * @param string $cookie
 	 * @return mixed|true
 	 */
 	public function controlPagedResult($link, $pageSize, $isCritical, $cookie) {
@@ -204,7 +204,7 @@ class LDAP implements ILDAPWrapper {
 	}
 
 	/**
-	 * @brief Checks whether the server supports LDAP
+	 * Checks whether the server supports LDAP
 	 * @return boolean if it the case, false otherwise
 	 * */
 	public function areLDAPFunctionsAvailable() {
@@ -212,7 +212,7 @@ class LDAP implements ILDAPWrapper {
 	}
 
 	/**
-	 * @brief Checks whether PHP supports LDAP Paged Results
+	 * Checks whether PHP supports LDAP Paged Results
 	 * @return boolean if it the case, false otherwise
 	 * */
 	public function hasPagedResultSupport() {
@@ -222,7 +222,7 @@ class LDAP implements ILDAPWrapper {
 	}
 
 	/**
-	 * @brief Checks whether the submitted parameter is a resource
+	 * Checks whether the submitted parameter is a resource
 	 * @param Resource $resource the resource variable to check
 	 * @return bool true if it is a resource, false otherwise
 	 */
@@ -248,7 +248,7 @@ class LDAP implements ILDAPWrapper {
 
 	/**
 	 * @param string $functionName
-	 * @param $args
+	 * @param array $args
 	 */
 	private function preFunctionCall($functionName, $args) {
 		$this->curFunc = $functionName;

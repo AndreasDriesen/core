@@ -15,7 +15,7 @@ class OC_Response {
 	const STATUS_SERVICE_UNAVAILABLE = 503;
 
 	/**
-	* @brief Enable response caching by sending correct HTTP headers
+	* Enable response caching by sending correct HTTP headers
 	* @param integer $cache_time time to cache the response
 	*  >0		cache time in seconds
 	*  0 and <0	enable default browser caching
@@ -41,7 +41,7 @@ class OC_Response {
 	}
 
 	/**
-	* @brief disable browser caching
+	* disable browser caching
 	* @see enableCaching with cache_time = 0
 	*/
 	static public function disableCaching() {
@@ -49,7 +49,7 @@ class OC_Response {
 	}
 
 	/**
-	* @brief Set response status
+	* Set response status
 	* @param int $status a HTTP status code, see also the STATUS constants
 	*/
 	static public function setStatus($status) {
@@ -83,7 +83,7 @@ class OC_Response {
 	}
 
 	/**
-	* @brief Send redirect response
+	* Send redirect response
 	* @param string $location to redirect to
 	*/
 	static public function redirect($location) {
@@ -92,8 +92,8 @@ class OC_Response {
 	}
 
 	/**
-	* @brief Set reponse expire time
-	* @param $expires date-time when the response expires
+	* Set reponse expire time
+	* @param string|DateTime $expires date-time when the response expires
 	*  string for DateInterval from now
 	*  DateTime object when to expire response
 	*/
@@ -113,7 +113,7 @@ class OC_Response {
 	/**
 	* Checks and set ETag header, when the request matches sends a
 	* 'not modified' response
-	* @param $etag token to use for modification check
+	* @param string $etag token to use for modification check
 	*/
 	static public function setETagHeader($etag) {
 		if (empty($etag)) {
@@ -131,7 +131,7 @@ class OC_Response {
 	/**
 	* Checks and set Last-Modified header, when the request matches sends a
 	* 'not modified' response
-	* @param $lastModified time when the reponse was last modified
+	* @param int|DateTime|string $lastModified time when the reponse was last modified
 	*/
 	static public function setLastModifiedHeader($lastModified) {
 		if (empty($lastModified)) {
@@ -170,7 +170,7 @@ class OC_Response {
 	}
 
 	/**
-	* @brief Send file as response, checking and setting caching headers
+	* Send file as response, checking and setting caching headers
 	* @param string $filepath of file to send
 	*/
 	static public function sendFile($filepath) {

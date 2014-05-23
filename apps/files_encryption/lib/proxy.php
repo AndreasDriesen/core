@@ -24,7 +24,7 @@
  */
 
 /**
- * @brief Encryption proxy which handles filesystem operations before and after
+ * Encryption proxy which handles filesystem operations before and after
  *        execution and encrypts, and handles keyfiles accordingly. Used for
  *        webui.
  */
@@ -79,8 +79,8 @@ class Proxy extends \OC_FileProxy {
 	}
 
 	/**
-	 * @param $path
-	 * @param $data
+	 * @param string $path
+	 * @param string $data
 	 * @return bool
 	 */
 	public function preFile_put_contents($path, &$data) {
@@ -144,7 +144,7 @@ class Proxy extends \OC_FileProxy {
 	}
 
 	/**
-	 * @brief update file cache with the new unencrypted size after file was written
+	 * update file cache with the new unencrypted size after file was written
 	 * @param string $path
 	 * @param mixed $result
 	 * @return mixed
@@ -212,7 +212,7 @@ class Proxy extends \OC_FileProxy {
 	}
 
 	/**
-	 * @brief remember initial fopen mode because sometimes it gets changed during the request
+	 * remember initial fopen mode because sometimes it gets changed during the request
 	 * @param string $path path
 	 * @param string $mode type of access
 	 */
@@ -225,8 +225,8 @@ class Proxy extends \OC_FileProxy {
 
 
 	/**
-	 * @param $path
-	 * @param $result
+	 * @param string $path
+	 * @param resource $result
 	 * @return resource
 	 */
 	public function postFopen($path, &$result) {
@@ -261,8 +261,8 @@ class Proxy extends \OC_FileProxy {
 	}
 
 	/**
-	 * @param $path
-	 * @param $data
+	 * @param string $path
+	 * @param array $data
 	 * @return array
 	 */
 	public function postGetFileInfo($path, $data) {
@@ -285,9 +285,9 @@ class Proxy extends \OC_FileProxy {
 	}
 
 	/**
-	 * @param $path
-	 * @param $size
-	 * @return bool
+	 * @param string $path
+	 * @param int $size
+	 * @return int|bool
 	 */
 	public function postFileSize($path, $size) {
 

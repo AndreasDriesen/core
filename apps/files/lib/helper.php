@@ -37,18 +37,10 @@ class Helper
 	public static function determineIcon($file) {
 		if($file['type'] === 'dir') {
 			$icon = \OC_Helper::mimetypeIcon('dir');
-			$absPath = $file->getPath();
-			$mount = \OC\Files\Filesystem::getMountManager()->find($absPath);
-			if (!is_null($mount)) {
-				$sid = $mount->getStorageId();
-				if (!is_null($sid)) {
-					$sid = explode(':', $sid);
-					if ($sid[0] === 'shared') {
-						$icon = \OC_Helper::mimetypeIcon('dir-shared');
-					} elseif ($sid[0] !== 'local' and $sid[0] !== 'home') {
-						$icon = \OC_Helper::mimetypeIcon('dir-external');
-					}
-				}
+			if ($file->isShared()) {
+				$icon = \OC_Helper::mimetypeIcon('dir-shared');
+			} elseif ($file->isMounted()) {
+				$icon = \OC_Helper::mimetypeIcon('dir-external');
 			}
 		}else{
 			$icon = \OC_Helper::mimetypeIcon($file->getMimetype());
@@ -167,7 +159,7 @@ class Helper
 	/**
 	 * Sort the given file info array
 	 *
-	 * @param \OCP\Files\FileInfo[] files to sort
+	 * @param \OCP\Files\FileInfo[] $files files to sort
 	 * @param string $sortAttribute attribute to sort on
 	 * @param bool $sortDescending true for descending sort, false otherwise
 	 * @return \OCP\Files\FileInfo[] sorted files
