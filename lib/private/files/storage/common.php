@@ -81,6 +81,10 @@ abstract class Common implements \OC\Files\Storage\Storage {
 	}
 
 	public function isSharable($path) {
+		if (\OC_Util::isSharingDisabledForUser()) {
+			return false;
+		}
+
 		return $this->isReadable($path);
 	}
 
@@ -376,7 +380,7 @@ abstract class Common implements \OC\Files\Storage\Storage {
 	/**
 	 * get the free space in the storage
 	 *
-	 * @param $path
+	 * @param string $path
 	 * @return int
 	 */
 	public function free_space($path) {
