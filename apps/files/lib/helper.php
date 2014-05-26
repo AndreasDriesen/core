@@ -31,13 +31,16 @@ class Helper
 	/**
 	 * Determine icon for a given file
 	 *
-	 * @param \OC\Files\FileInfo $file file info
+	 * @param \OCP\Files\FileInfo $file file info
+	 * @param array $filesSharedByUser
 	 * @return string icon URL
 	 */
-	public static function determineIcon($file) {
+	public static function determineIcon($file, $filesSharedByUser = null) {
 		if($file['type'] === 'dir') {
 			$icon = \OC_Helper::mimetypeIcon('dir');
 			if ($file->isShared()) {
+				$icon = \OC_Helper::mimetypeIcon('dir-shared');
+			} elseif (!empty($filesSharedByUser) && self::isSharedByUser($file, $filesSharedByUser)) {
 				$icon = \OC_Helper::mimetypeIcon('dir-shared');
 			} elseif ($file->isMounted()) {
 				$icon = \OC_Helper::mimetypeIcon('dir-external');
@@ -47,6 +50,21 @@ class Helper
 		}
 
 		return substr($icon, 0, -3) . 'svg';
+	}
+
+	/**
+	 * check if file is shared by the user
+	 * @param \OCP\Files\FileInfo $file
+	 * @param array $filesSharedByUser
+	 * @return boolean
+	 */
+	private static function isSharedByUser($file, $filesSharedByUser) {
+		foreach ($filesSharedByUser as $shared) {
+			if ($file['path'] === 'files' . $shared['path']) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -98,32 +116,33 @@ class Helper
 	/**
 	 * Formats the file info to be returned as JSON to the client.
 	 *
-	 * @param \OCP\Files\FileInfo $i
+	 * @param \OCP\Files\FileInfo $file
+	 * @param array $filesSharedByUser files shared by the user
 	 * @return array formatted file info
 	 */
-	public static function formatFileInfo($i) {
+	public static function formatFileInfo($file, $filesSharedByUser = null) {
 		$entry = array();
 
-		$entry['id'] = $i['fileid'];
-		$entry['parentId'] = $i['parent'];
-		$entry['date'] = \OCP\Util::formatDate($i['mtime']);
-		$entry['mtime'] = $i['mtime'] * 1000;
+		$entry['id'] = $file['fileid'];
+		$entry['parentId'] = $file['parent'];
+		$entry['date'] = \OCP\Util::formatDate($file['mtime']);
+		$entry['mtime'] = $file['mtime'] * 1000;
 		// only pick out the needed attributes
-		$entry['icon'] = \OCA\Files\Helper::determineIcon($i);
-		if (\OC::$server->getPreviewManager()->isMimeSupported($i['mimetype'])) {
+		$entry['icon'] = \OCA\Files\Helper::determineIcon($file, $filesSharedByUser);
+		if (\OC::$server->getPreviewManager()->isMimeSupported($file['mimetype'])) {
 			$entry['isPreviewAvailable'] = true;
 		}
-		$entry['name'] = $i['name'];
-		$entry['permissions'] = $i['permissions'];
-		$entry['mimetype'] = $i['mimetype'];
-		$entry['size'] = $i['size'];
-		$entry['type'] = $i['type'];
-		$entry['etag'] = $i['etag'];
-		if (isset($i['displayname_owner'])) {
-			$entry['shareOwner'] = $i['displayname_owner'];
+		$entry['name'] = $file['name'];
+		$entry['permissions'] = $file['permissions'];
+		$entry['mimetype'] = $file['mimetype'];
+		$entry['size'] = $file['size'];
+		$entry['type'] = $file['type'];
+		$entry['etag'] = $file['etag'];
+		if (isset($file['displayname_owner'])) {
+			$entry['shareOwner'] = $file['displayname_owner'];
 		}
-		if (isset($i['is_share_mount_point'])) {
-			$entry['isShareMountPoint'] = $i['is_share_mount_point'];
+		if (isset($file['is_share_mount_point'])) {
+			$entry['isShareMountPoint'] = $file['is_share_mount_point'];
 		}
 		return $entry;
 	}
@@ -134,8 +153,9 @@ class Helper
 	 */
 	public static function formatFileInfos($fileInfos) {
 		$files = array();
+		$filesSharedByUser = \OCP\Share::getItemsShared('file');
 		foreach ($fileInfos as $i) {
-			$files[] = self::formatFileInfo($i);
+			$files[] = self::formatFileInfo($i, $filesSharedByUser);
 		}
 
 		return $files;
